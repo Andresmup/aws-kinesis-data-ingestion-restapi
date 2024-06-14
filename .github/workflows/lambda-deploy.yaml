@@ -1,0 +1,59 @@
+name: Docker image for ECR
+on:
+  push:
+    branches:
+      - prod
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build_and_publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Connect to AWS
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-session-name: aws-push-lambda-session
+          role-to-assume: ${{ secrets.AWS_IAM_ROLE }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      # LAMBDA KINESIS CONSUMER
+      - name: Zip python lambda_kinesis_consumer code
+        run: zip -j deploy_consumer.zip lambda_kinesis_consumer/lambda_function.py
+
+      - name: Push zip file with deploy_consumer code
+        run: aws lambda update-function-code --function-name ${{ secrets.AWS_LAMBDA_KINESIS_CONSUMER }} --zip-file=fileb://deploy_consumer.zip
+
+      # LAMBDA ORDERS
+      - name: Zip python lambda_orders_transformation code
+        run: zip -j deploy_orders_transformation.zip lambda_orders_transformation/lambda_function.py
+
+      - name: Push zip file with deploy_orders_transformation code
+        run: aws lambda update-function-code --function-name ${{ secrets.AWS_LAMBDA_ORDERS }} --zip-file=fileb://deploy_orders_transformation.zip
+
+      # LAMBDA PRODUCT DETAILS        
+      - name: Zip python lambda_product_details_tranformation code
+        run: zip -j deploy_product_details_transformation.zip lambda_product_details_tranformation/lambda_function.py
+
+      - name: Push zip file with deploy_product_details_transformation code
+        run: aws lambda update-function-code --function-name ${{ secrets.AWS_LAMBDA_PRODUCT_DETAILS }} --zip-file=fileb://deploy_product_details_transformation.zip
+
+      # LAMBDA SHIPPING ADDRESSES
+      - name: Zip python lambda_shipping_addresses_transformation code
+        run: zip -j deploy_shipping_addresses_transformation.zip lambda_shipping_addresses_transformation/lambda_function.py
+
+      - name: Push zip file with deploy_shipping_addresses_transformation code
+        run: aws lambda update-function-code --function-name ${{ secrets.AWS_LAMBDA_SHIPPING_ADDRESSES }} --zip-file=fileb://deploy_shipping_addresses_transformation.zip
+      
+      # LAMBDA PURCHASE DETAILS
+      - name: Zip python lambda_purchase_details_transformation code
+        run: zip -j deploy_purchase_details_transformation.zip lambda_purchase_details_transformation/lambda_function.py
+
+      - name: Push zip file with deploy_purchase_details_transformation code
+        run: aws lambda update-function-code --function-name ${{ secrets.AWS_LAMBDA_PURCHASE_DETAILS }} --zip-file=fileb://deploy_purchase_details_transformation.zip
+ 
