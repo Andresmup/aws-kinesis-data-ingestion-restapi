@@ -109,7 +109,7 @@ while True:
     print("body", body, "\n") #Print json body
 
     # Deploy api gateway endpoint
-    endpoint = "https://ndr4bpix52.execute-api.us-east-1.amazonaws.com/apiv1"
+    endpoint = "https://0uyk42oadl.execute-api.us-east-1.amazonaws.com/apiv1"
 
     # Stage
     stage = "/orders"

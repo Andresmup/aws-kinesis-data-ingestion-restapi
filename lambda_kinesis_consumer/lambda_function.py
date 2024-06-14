@@ -4,7 +4,7 @@ import json
 import boto3
 import os
 
-# Updated from github
+# Updated from github action
 
 def lambda_handler(event, context):
     #Get region

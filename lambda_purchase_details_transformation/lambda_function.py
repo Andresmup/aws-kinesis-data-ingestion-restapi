@@ -2,7 +2,7 @@ import base64
 import json
 import datetime
 
-# Updated from github
+# Updated from github action
 
 def lambda_handler(event, context):
     # Create return value.
