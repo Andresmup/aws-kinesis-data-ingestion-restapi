@@ -1,4 +1,4 @@
-name: Docker image for ECR
+name: Zip python for update lambda functions
 on:
   push:
     branches:
