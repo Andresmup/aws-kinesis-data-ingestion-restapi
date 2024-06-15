@@ -6,7 +6,7 @@ Additionally, all the infrastructure is deployed using Terraform, which reduces 
 
 The main philosophy of this project is to facilitate the usage of data while maintaining lower costs by using pay-as-you-go services where costs are incurred only based on actual usage. This reduces the time required for setting up and maintaining infrastructure, allowing more focus on transforming and leveraging the data.
 
-![SCHEMA](images/aws_data_ingestion_restapi_kinesis_light.svg)
+![SCHEMA](images/aws_data_ingestion_restapi_kinesis_light.png)
 
 ## RESOURCES
 
